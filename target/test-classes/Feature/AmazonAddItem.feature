@@ -1,5 +1,5 @@
 #Author: Surabhi Mahale
-@smokeTest
+
 Feature: Test the Amazon UK website
 
   Scenario: Add an item to Amazon basket and increase its quantity

@@ -1,21 +1,14 @@
 package StepDefinitions;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.By.ByXPath;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.devtools.idealized.Javascript;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import Pages.AddProductInBasket;
+import Pages.ClearBasket;
 import Pages.CookiePage;
 import Pages.LoginPage;
 import Pages.SearchProduct;
@@ -24,11 +17,7 @@ import Pages.ValidateSubTotalInBasket;
 import io.cucumber.java.en.*;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 
@@ -100,7 +89,7 @@ public class AmazonTest {
 		AddProductInBasket AddProductInBasket = new AddProductInBasket(driver);
 
 		System.out.println("add_the_product_to_basket() : waiting for 30 seconds");
-		Thread.sleep(30000);
+		Thread.sleep(20000);
 		System.out.println("add_the_product_to_basket() : done waiting for 30 seconds");
 
 		// Add the product to basket
@@ -169,17 +158,23 @@ public class AmazonTest {
 
 	public void clearBasket() throws InterruptedException {
 
-		driver.findElement(By.xpath("//div[@id='nav-cart-text-container']")).click();
+		ValidateProductAddToBasket ValidateProductAddToBasket = new ValidateProductAddToBasket(driver);
+
+		// Open the basket
+		ValidateProductAddToBasket.openTheBasket();
+
+		// Clear existing items from the basket
+		ClearBasket ClearBasket = new ClearBasket(driver);
 		try {
 			if (driver.getPageSource().contains(productSelected)) {
 				System.out.println("Cart is empty");
 			}
-		}catch(Exception e) {
-			List<WebElement> itemsInBasket = driver.findElements(By.xpath("//input[@value='Delete']"));
-			while(! itemsInBasket.isEmpty()) {
+		} catch (Exception e) {
+			List<WebElement> itemsInBasket = ClearBasket.deleteItems();
+			while (!itemsInBasket.isEmpty()) {
 				itemsInBasket.get(0).click();
 				Thread.sleep(5000);
-				itemsInBasket = driver.findElements(By.xpath("//input[@value='Delete']"));
+				itemsInBasket = ClearBasket.deleteItems();
 			}
 		}
 
