@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="95.75">
+    <testcase classname="Test the Amazon UK website" name="Add an item to Amazon basket and increase its quantity" time="95.463">
+        <system-out><![CDATA[Given user launches browser.................................................passed
+When user logins to Amazon..................................................passed
+When searches for the product and verifies the search result................passed
+Then add the product to basket..............................................passed
+Then validate the product is added to basket................................passed
+And increase the quantity and validate the subtotal.........................passed
+]]></system-out>
+    </testcase>
+</testsuite>
